@@ -46,5 +46,19 @@ namespace tsl2ur.Test
                 Assert.AreEqual(expTime[i], trades[i].EntryTime);
             }
         }
+
+        [TestMethod]
+        public void TestTsLabDate()
+        {
+            Trade[] tslTrades = new Trade[] { 
+                new Trade() {TsLabEntryDateTime = "21.03.2014 18:29"},
+                new Trade() {TsLabEntryDateTime = "01.01.2001 0:00"}
+            };
+
+            for (int i = 0; i < tslTrades.Length; i++)
+            {
+                Assert.AreEqual(trades[i].EntryDateTime, tslTrades[i].EntryDateTime);
+            }
+        }
     }
 }

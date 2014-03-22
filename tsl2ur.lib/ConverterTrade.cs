@@ -58,6 +58,21 @@ namespace tsl2ur.lib
         {
             set { _exitPrice = Convert.ToDouble(value, System.Globalization.CultureInfo.CreateSpecificCulture("en")); }
         }
+
+        public string TsLabTradeType
+        {
+            set { _isLong = (value == "Длинная") ? true : false; }
+        }
+
+        public string TsLabEntryDateTime
+        {
+            set { _entryDateTime = DateTime.Parse(value); }
+        }
+
+        public string TsLabExitDateTime
+        {
+            set { _exitDateTime = DateTime.Parse(value); }
+        }
         #endregion
     }
 }
