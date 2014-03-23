@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace elp87
+namespace elp87.Financial
 {
     public class Trade
     {

@@ -3,7 +3,7 @@
 
 namespace tsl2ur.lib
 {
-    public class Trade : elp87.Trade
+    public class Trade : elp87.Financial.Trade
     {
         #region Properties
         public string EntryDate

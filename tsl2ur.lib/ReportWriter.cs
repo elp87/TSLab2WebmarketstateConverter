@@ -10,14 +10,20 @@ namespace tsl2ur.lib
     public class ReportWriter
     {
         #region Fields
-        private List<Trade> _tradeList; 
+        private List<Trade> _tradeList;
+        private Actions.ActionResult _result;
         #endregion
 
         #region Constructors
         public ReportWriter(List<Trade> trades)
         {
             this._tradeList = trades;
+            this._result = Actions.ActionResult.None;
         }
+        #endregion
+
+        #region Properties
+        public Actions.ActionResult ActionResult { get { return _result; } }
         #endregion
 
         #region Methods
@@ -30,31 +36,46 @@ namespace tsl2ur.lib
             this.PrepareHeaders(worksheet);
 
             int n = 1;
-            foreach (Trade trade in this._tradeList)
+            try
             {
-                worksheet.Cells[n, 0] = new Cell(n);
-                worksheet.Cells[n, 1] = new Cell(trade.EntryDate);
-                worksheet.Cells[n, 2] = new Cell(trade.EntryTime);
-                worksheet.Cells[n, 3] = new Cell(trade.ExitDate);
-                worksheet.Cells[n, 4] = new Cell(trade.ExitTime);
-                worksheet.Cells[n, 5] = new Cell(trade.InstrumentName);
-                worksheet.Cells[n, 6] = new Cell(trade.TradeType);
-                worksheet.Cells[n, 7] = new Cell(trade.EntryPrice);
-                worksheet.Cells[n, 8] = new Cell(trade.ExitPrice);
-                worksheet.Cells[n, 9] = new Cell(trade.Count);
-                worksheet.Cells[n, 10] = new Cell(trade.Fee);
-                worksheet.Cells[n, 11] = new Cell(trade.DollarPrice);
-                worksheet.Cells[n, 12] = new Cell(trade.EntryReason);
-                worksheet.Cells[n, 13] = new Cell(trade.ExitReason);
-                worksheet.Cells[n, 14] = new Cell(trade.Rating);
-                worksheet.Cells[n, 15] = new Cell(trade.Strategy);
-                worksheet.Cells[n, 16] = new Cell(trade.Comment);
+                this._result = Actions.ActionResult.Success;
 
-                n++;
+                foreach (Trade trade in this._tradeList)
+                {
+                    worksheet.Cells[n, 0] = new Cell(n);
+                    worksheet.Cells[n, 1] = new Cell(trade.EntryDate);
+                    worksheet.Cells[n, 2] = new Cell(trade.EntryTime);
+                    worksheet.Cells[n, 3] = new Cell(trade.ExitDate);
+                    worksheet.Cells[n, 4] = new Cell(trade.ExitTime);
+                    worksheet.Cells[n, 5] = new Cell(trade.InstrumentName);
+                    worksheet.Cells[n, 6] = new Cell(trade.TradeType);
+                    worksheet.Cells[n, 7] = new Cell(trade.EntryPrice);
+                    worksheet.Cells[n, 8] = new Cell(trade.ExitPrice);
+                    worksheet.Cells[n, 9] = new Cell(trade.Count);
+                    worksheet.Cells[n, 10] = new Cell(trade.Fee);
+                    worksheet.Cells[n, 11] = new Cell(trade.DollarPrice);
+                    worksheet.Cells[n, 12] = new Cell(trade.EntryReason);
+                    worksheet.Cells[n, 13] = new Cell(trade.ExitReason);
+                    worksheet.Cells[n, 14] = new Cell(trade.Rating);
+                    worksheet.Cells[n, 15] = new Cell(trade.Strategy);
+                    worksheet.Cells[n, 16] = new Cell(trade.Comment);
+
+                    n++;
+                }
             }
-
-            workbook.Worksheets.Add(worksheet);
-            workbook.Save(fileName);
+            catch (Exception)
+            {
+                this._result = Actions.ActionResult.Error;
+            }
+            try
+            {
+                workbook.Worksheets.Add(worksheet);
+                workbook.Save(fileName);
+            }
+            catch (Exception)
+            {
+                this._result = Actions.ActionResult.Error;
+            }
         }        
         #endregion
 
