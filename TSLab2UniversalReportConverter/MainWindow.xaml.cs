@@ -1,17 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using tsl2ur.lib;
 
 
 namespace TSLab2UniversalReportConverter
@@ -21,27 +11,41 @@ namespace TSLab2UniversalReportConverter
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Trade> _tradeList;
         public MainWindow()
         {
             InitializeComponent();
+        }        
+
+        private void TsLabReaderButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog tslabDialog = new OpenFileDialog();
+            tslabDialog.Filter = "Отчет TSLab (*.csv)|*.csv";
+            tslabDialog.DefaultExt = ".csv";
+            bool? result = tslabDialog.ShowDialog();
+            if (result == true)
+            {
+                string filename = tslabDialog.FileName;
+                TsLabReader reader = new TsLabReader(filename);
+                this._tradeList = reader.GetTradeList();
+                this.TsLabFileLabel.Content = filename;
+            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ReportWriterButton_Click(object sender, RoutedEventArgs e)
         {
-            ////System.IO.File.Create(@"C:\Users\Alexandr\Documents");
-            //string file = @"C:\Users\Alexandr\Documents\newdoc.xls";
-            //Workbook workbook = new Workbook();
-            //Worksheet worksheet = new Worksheet("First Sheet");
-            //worksheet.Cells[0, 1] = new Cell((short)1);
-            //worksheet.Cells[2, 0] = new Cell(9999999);
-            //worksheet.Cells[3, 3] = new Cell((decimal)3.45);
-            //worksheet.Cells[2, 2] = new Cell("Text string");
-            //worksheet.Cells[2, 4] = new Cell("Second string");
-            //worksheet.Cells[4, 0] = new Cell(32764.5, "#,##0.00");
-            //worksheet.Cells[5, 1] = new Cell(DateTime.Now, @"YYYY\-MM\-DD");
-            //worksheet.Cells.ColumnWidth[0, 1] = 3000;
-            //workbook.Worksheets.Add(worksheet);
-            //workbook.Save(file);
+            SaveFileDialog reportDialog = new SaveFileDialog();
+            reportDialog.Filter = "Файл Excel 97-2003 (*.xls)|*.xls";
+            reportDialog.DefaultExt = ".xls";
+            bool? result = reportDialog.ShowDialog();
+            if (result == true)
+            {
+                string filename = reportDialog.FileName;
+                ReportWriter writer = new ReportWriter(this._tradeList);
+                writer.WriteReport(filename);
+                this.ReportFileLabel.Content = filename;
+                MessageBox.Show("Успешно");
+            }
         }
     }
 }
