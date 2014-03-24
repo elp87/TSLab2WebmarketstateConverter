@@ -53,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConverterTradeTest.cs" />
     <Compile Include="TsLabReaderTest.cs" />
+    <Compile Include="ReportFormerReaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tsl2ur.lib\tsl2ur.lib.csproj">

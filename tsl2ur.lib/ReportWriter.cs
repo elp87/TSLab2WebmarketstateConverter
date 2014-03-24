@@ -37,25 +37,29 @@ namespace tsl2ur.lib
             {
                 this._result = Actions.ActionResult.Success;
 
+                ReportFormerReader former = new ReportFormerReader();
+                List<CellFormat> cellFormats = former.GetCellFormatList();
+
                 foreach (Trade trade in this._tradeList)
                 {
-                    worksheet.Cells[n, 0] = new Cell(n);
-                    worksheet.Cells[n, 1] = new Cell(trade.EntryDate);
-                    worksheet.Cells[n, 2] = new Cell(trade.EntryTime);
-                    worksheet.Cells[n, 3] = new Cell(trade.ExitDate);
-                    worksheet.Cells[n, 4] = new Cell(trade.ExitTime);
-                    worksheet.Cells[n, 5] = new Cell(trade.InstrumentName);
-                    worksheet.Cells[n, 6] = new Cell(trade.TradeType);
-                    worksheet.Cells[n, 7] = new Cell(trade.EntryPrice);
-                    worksheet.Cells[n, 8] = new Cell(trade.ExitPrice);
-                    worksheet.Cells[n, 9] = new Cell(trade.Count);
-                    worksheet.Cells[n, 10] = new Cell(trade.Fee);
-                    worksheet.Cells[n, 11] = new Cell(trade.DollarPrice);
-                    worksheet.Cells[n, 12] = new Cell(trade.EntryReason);
-                    worksheet.Cells[n, 13] = new Cell(trade.ExitReason);
-                    worksheet.Cells[n, 14] = new Cell(trade.Rating);
-                    worksheet.Cells[n, 15] = new Cell(trade.Strategy);
-                    worksheet.Cells[n, 16] = new Cell(trade.Comment);
+                    worksheet.Cells[n, 0] = new Cell(n, cellFormats[0]);
+                    worksheet.Cells[n, 1] = new Cell(40449, cellFormats[1]);
+                    worksheet.Cells[n, 2] = new Cell(trade.EntryTime, cellFormats[2]);
+                    worksheet.Cells[n, 3] = new Cell(40450, cellFormats[3]);
+                    worksheet.Cells[n, 4] = new Cell(trade.ExitTime, cellFormats[4]);
+                    worksheet.Cells[n, 5] = new Cell(trade.InstrumentName, cellFormats[5]);
+                    worksheet.Cells[n, 6] = new Cell(trade.TradeType, cellFormats[6]);
+                    worksheet.Cells[n, 7] = new Cell(trade.EntryPrice, cellFormats[7]);
+                    worksheet.Cells[n, 8] = new Cell(trade.ExitPrice, cellFormats[8]);
+                    worksheet.Cells[n, 9] = new Cell(trade.Count, cellFormats[9]);
+                    worksheet.Cells[n, 10] = new Cell(6, cellFormats[10]);
+                    worksheet.Cells[n, 11] = new Cell(31, cellFormats[11]);
+                    worksheet.Cells[n, 12] = new Cell(trade.EntryReason, cellFormats[12]);
+                    worksheet.Cells[n, 13] = new Cell(trade.ExitReason, cellFormats[13]);
+                    worksheet.Cells[n, 14] = new Cell(2, cellFormats[14]);
+                    worksheet.Cells[n, 15] = new Cell(trade.Strategy, cellFormats[15]);
+                    worksheet.Cells[n, 16] = new Cell(trade.Comment, cellFormats[16]);
+                    worksheet.Cells[n, 17] = new Cell("", cellFormats[17]);
 
                     n++;
                 }
